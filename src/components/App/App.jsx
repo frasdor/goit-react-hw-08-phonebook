@@ -1,61 +1,37 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ContactForm from '../ContactForm/ContactForm';
-import ContactList from '../ContactList/ContactList';
-import Filter from '../Filter/Filter';
-import { fetchContacts, addContact, deleteContact } from '../../redux/contacts/contactsThunks';
-import { setFilter } from '../../redux/contacts/contactsSlice';
-import styles from './App.module.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import LoginPage from '../LoginPage/LoginPage';
+import ContactsPage from '../ContactsPage/ContactsPage';
+import Navigation from '../Navigation/Navigation'; 
+import { useSelector } from 'react-redux';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
-  const loading = useSelector(state => state.contacts.loading);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const handleAddContact = ({ name, number }) => {
-    const isExistingContact = contacts.some(c => c.name.toLowerCase() === name.toLowerCase());
-    if (isExistingContact) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
-
-    dispatch(addContact({ name, number }));
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
-
-  const handleFilterChange = (e) => {
-    dispatch(setFilter(e.target.value));
-  };
-
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
-  };
-
-  const filteredContacts = getFilteredContacts();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user); 
 
   return (
-    <div className={styles.appContainer}>
-      <h1>Phonebook</h1>
-      <ContactForm onSubmit={handleAddContact} />
-
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={handleFilterChange} />
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
-      )}
-    </div>
+    <Router>
+      <Navigation /> 
+      <div>
+        {isAuthenticated && user && (
+          <div>
+            <p>Welcome, {user.name}</p> 
+          </div>
+        )}
+      </div>
+      <Routes>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/contacts"
+          element={isAuthenticated ? <ContactsPage /> : <Navigate to="/login" />}
+        />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
   );
 };
+
 
 export default App;
