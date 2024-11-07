@@ -1,0 +1,28 @@
+.nav {
+    position: fixed; /* Stała pozycja */
+    top: 0; /* Przyklejony do górnej krawędzi */
+    left: 0; /* Przyklejony do lewej krawędzi */
+    width: 100%; /* Szerokość na całą stronę */
+    display: flex; /* Układ elastyczny w jednym wierszu */
+    justify-content: flex-start; /* Elementy wyrównane do lewej */
+    gap: 20px; /* Odstęp między linkami */
+    padding: 10px 20px; /* Padding w poziomie i pionie */
+    background-color: #f9f9f9; /* Jasne tło */
+    border-bottom: 2px solid #ccc; /* Dolna granica */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    /* z-index: 10; Aby pasek był nad innymi elementami */
+  }
+  
+  .navLink {
+    font-size: 18px;
+    color: rgb(27, 52, 85); /* Kolor tekstu */
+    text-decoration: none; /* Usuwamy podkreślenie */
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Efekt przy hover */
+  }
+  
+  .navLink:hover {
+    background-color: #495796; /* Tło na hover */
+    color: white; /* Kolor tekstu na hover */
+  }

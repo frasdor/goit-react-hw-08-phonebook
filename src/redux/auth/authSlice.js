@@ -3,20 +3,23 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global';
 
-export const registerUser = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
+export const registerUser = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => { 
+  // const regidter = createAsyncThunk("auth/register", (credentials, thunkAPI0) => {
+    // try {
+    // const res = axios.post("/users/signup", credentials);
+    // console.log(res);
+    //  return res.data;
+    // } catch (err) {
+    // return thunkAPI.rejectWithValue(err.message);
+    // }
+    // });
+
+    // export { register };
     try {
       const response = await axios.post('/users/signup', userData);
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       return response.data;
     } catch (error) {
-      console.error('Error response:', error.response); // Dodanie logowania pełnej odpowiedzi błędu
-      if (error.response) {
-        console.error('Error data:', error.response.data); // Zawartość błędu
-        console.error('Error status:', error.response.status); // Status błędu
-        console.error('Error headers:', error.response.headers); // Nagłówki odpowiedzi
-      } else {
-        console.error('Unknown error:', error.message); // Obsługa innych błędów
-      }
       return rejectWithValue(error.response ? error.response.data : error.message); // Zwróć pełny komunikat błędu
     }
   });
@@ -54,7 +57,11 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true
+      })
       .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;

@@ -5,6 +5,8 @@ import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 import { fetchContacts, addContact, deleteContact } from '../../redux/contacts/contactsThunks';
 import { setFilter } from '../../redux/contacts/contactsSlice';
+import styles from './ContactsPage.module.css';
+
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -41,13 +43,14 @@ const ContactsPage = () => {
   const filteredContacts = getFilteredContacts();
 
   return (
-    <div>
-      <h1>Contacts</h1>
+    <div className={styles.contactsPage}>
+      <h1 className={styles.pageHeader}>Contacts</h1>
       <ContactForm onSubmit={handleAddContact} />
       <Filter value={filter} onChange={handleFilterChange} />
       {loading ? <p>Loading...</p> : <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />}
     </div>
   );
 };
+
 
 export default ContactsPage;

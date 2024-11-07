@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/auth/authSlice';
+import styles from './RegisterPage.module.css';
 
 function RegisterPage() {
   const dispatch = useDispatch();
@@ -19,37 +20,40 @@ function RegisterPage() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
+    <div className={styles.registerPage}>
+      <h2 className={styles.formHeader}>Register</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Name:</label>
           <input 
             type="text" 
             value={name} 
             onChange={(e) => setName(e.target.value)} 
             required 
+            className={styles.input}
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Email:</label>
           <input 
             type="email" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
             required 
+            className={styles.input}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Password:</label>
           <input 
             type="password" 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             required 
+            className={styles.input}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className={styles.button}>Register</button>
       </form>
     </div>
   );

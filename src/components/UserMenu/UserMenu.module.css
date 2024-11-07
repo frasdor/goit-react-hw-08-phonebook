@@ -1,0 +1,33 @@
+.userMenu {
+    display: flex;
+    flex-direction: row; /* Wyswietlanie elementów obok siebie */
+    align-items: center;
+    justify-content: flex-end; /* Wyrównanie do prawej strony */
+    gap: 10px;
+    padding: 10px;
+    position: fixed; /* Ustalenie pozycji w stałym miejscu na stronie */
+    top: 10px; /* Odstęp od góry */
+    right: 20px; /* Odstęp od prawej krawędzi */
+    
+    
+  }
+  
+  .userEmail {
+    font-size: 16px;
+    color: rgb(27, 52, 85);
+    margin-bottom: 10px;
+  }
+  
+  .logoutButton {
+    padding: 8px 16px;
+    background-color: #495796;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .logoutButton:hover {
+    background-color: #45a049;
+  }
+  
